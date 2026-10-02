@@ -48,7 +48,7 @@ int pipeline(int nordenes, char * infile, char * outfile, int append, int bgnd)
     }
     for(int i=0; i<(nordenes-1); i++){
         int fd[2];
-        pipe[fd];
+        pipe(fd);
         num_descriptores+=2;
         red_ordenes[i].salida = fd[1];
         red_ordenes[i+1].entrada = fd[0];
