@@ -149,44 +149,44 @@ void visualizar(void) {
 
     printf("\n");
     printf("\033[35m╔══════════════════════════════════════╗\033[0m\n");
-    printf("\033[35m║          ANALISIS DE LA ORDEN        ║\033[0m\n");
+    printf("\033[35m║          ANÁLISIS DE LA ORDEN        ║\033[0m\n");
     printf("\033[35m╚══════════════════════════════════════╝\033[0m\n");
 
 
-    printf("Numero de ordenes: %d\n\n", n);
+    printf(" Número de órdenes: %d\n\n", n);
 
     for (int i = 0; i < n; i++) {
-        printf("┌─ \033[35mOrden %d: %s\033[0m\n", i + 1, ordenes[i]);
-        printf("│  Numero de argumentos: %d\n", num_arg[i]);
+        printf(" ┌─ \033[35mOrden %d: %s\033[0m\n", i + 1, ordenes[i]);
+        printf(" │  Número de argumentos: %d\n", num_arg[i]);
         for (int j = 0; j < num_arg[i]; j++) {
-            printf("│  - Argumento %d: %s\n", j, argumentos[i][j]);
+            printf(" │  - Argumento %d: %s\n", j, argumentos[i][j]);
         }
-        printf("└─────────────────────────────\n\n");
+        printf(" └─────────────────────────────\n\n");
     }
       //┌│└─
 
 
     if (strlen(fich_entrada()) > 0) {
-        printf("Redireccion de entrada -> %s\n", fich_entrada());
+        printf(" Redirección de entrada -> %s\n", fich_entrada());
     }else {
-        printf("Redireccion de entrada -> \033[31mninguna\033[0m\n");
+        printf(" Redirección de entrada -> \033[31mninguna\033[0m\n");
     }
     if (strlen(fich_salida()) > 0) {
-        printf("Redireccion de salida -> %s\n", fich_salida());
+        printf(" Redirección de salida -> %s\n", fich_salida());
 
         if (es_append())
             printf("     -> Append\n");
         else
             printf("     -> Trunk\n");
     } else {
-        printf("Redireccion de salida -> \033[31mninguna\033[0m\n");
+        printf(" Redirección de salida -> \033[31mninguna\033[0m\n");
     }
     printf("\n");
 
     if (es_background()) {
-        printf("BACKGROUND\n");
+        printf(" ->(ejecutado en modo background)\n");
     }else {
-        printf("FOREGROUND\n");
+        printf(" ->(ejecutado en modo foreground)\n");
     }
 } // Fin de "visualizar"
 
