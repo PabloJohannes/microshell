@@ -61,7 +61,7 @@ int main(int argc, char * argv[])
 	     m_argumentos=get_argumentos();
 	     if(m_n>0)
 	     {
-          if (pipeline_profe(m_n,fich_entrada(),fich_salida(),es_append(),es_background())==OK)
+          if (pipeline(m_n,fich_entrada(),fich_salida(),es_append(),es_background())==OK)
                     ejecutar(m_n,m_num_arg,m_ordenes,m_argumentos,es_background());
         }
 
@@ -159,7 +159,7 @@ void visualizar(void) {
         printf(" ┌─ \033[35mOrden %d: %s\033[0m\n", i + 1, ordenes[i]);
         printf(" │  Número de argumentos: %d\n", num_arg[i]);
         for (int j = 0; j < num_arg[i]; j++) {
-            printf(" │  - Argumento %d: %s\n", j, argumentos[i][j]);
+            printf(" │  - Argumento %d: %s\n", j+1, argumentos[i][j]);
         }
         printf(" └─────────────────────────────\n\n");
     }
@@ -167,27 +167,29 @@ void visualizar(void) {
 
 
     if (strlen(fich_entrada()) > 0) {
-        printf(" Redirección de entrada -> %s\n", fich_entrada());
+        printf(" Redirección de entrada → %s\n", fich_entrada());
     }else {
-        printf(" Redirección de entrada -> \033[31mninguna\033[0m\n");
+        printf(" Redirección de entrada → \033[31mninguna\033[0m\n");
     }
     if (strlen(fich_salida()) > 0) {
-        printf(" Redirección de salida -> %s\n", fich_salida());
+        printf(" Redirección de salida → %s\n", fich_salida());
 
         if (es_append())
-            printf("     -> Append\n");
+            printf("     → Append\n");
         else
-            printf("     -> Trunk\n");
+            printf("     → Trunk\n");
     } else {
-        printf(" Redirección de salida -> \033[31mninguna\033[0m\n");
+        printf(" Redirección de salida → \033[31mninguna\033[0m\n");
     }
     printf("\n");
 
     if (es_background()) {
-        printf(" ->(ejecutado en modo background)\n");
+        printf(" \033[38;5;208m→ (ejecutado en modo background)\033[0m\n");
     }else {
-        printf(" ->(ejecutado en modo foreground)\n");
+        printf(" \033[32m→ (ejecutado en modo foreground)\033[0m\n");
     }
+
+    printf("\n");
 } // Fin de "visualizar"
 
 

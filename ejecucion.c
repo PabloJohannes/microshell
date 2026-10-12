@@ -19,12 +19,12 @@ int ejecutar (int nordenes , int *nargs , char **ordenes , char ***args , int bg
         for(int i=0;i<nordenes;i++) {
             pid_t val=fork();
             if(val==0) { //Hijo
-                redirigir_entrada_profe(i);
-                redirigir_salida_profe(i);
-                cerrar_fd_profe();
+                redirigir_entrada(i);
+                redirigir_salida(i);
+                cerrar_fd();
                 execvp(ordenes[i], args[i]);
                 printf("Error haciendo el execvp en la orden %d",i+1);
-                exit(ERROR);
+                _exit(ERROR);
             }else if(val==-1) {
                 printf("Error haciendo el fork para la orden %d",i+1);
                 exit(ERROR);
@@ -32,7 +32,7 @@ int ejecutar (int nordenes , int *nargs , char **ordenes , char ***args , int bg
             }
         }
     //Padre:
-    cerrar_fd_profe();
+    cerrar_fd();
 
     while(wait(NULL) != -1);
     }
