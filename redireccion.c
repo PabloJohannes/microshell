@@ -34,20 +34,19 @@ int pipeline(int nordenes, char * infile, char * outfile, int append, int bgnd)
     redireccion_ini();
 
 
-    if(infile != ""){
+    if(infile[0] != '\0'){
         descriptor_fichero_entrada = open(infile,O_RDONLY);
         if(descriptor_fichero_entrada<0) { return ERROR; }
         red_ordenes[0].entrada = descriptor_fichero_entrada;
         num_descriptores++;
         //abrir archivo y asignar descriptor para ponerlo luego como entrada de la primera orden
     }
-
-    if(outfile != ""){
+    if(outfile[0] != '\0'){
         if(append) {
-            descriptor_fichero_salida = open(outfile,O_WRONLY,O_APPEND);
+            descriptor_fichero_salida = open(outfile,O_WRONLY|O_APPEND|O_CREAT,0644);
                 //a�adir al final del fichero utilizado(modo append)
         } else {
-            descriptor_fichero_salida = open(outfile,O_WRONLY,O_TRUNC);
+            descriptor_fichero_salida = open(outfile,O_WRONLY|O_TRUNC|O_CREAT,0644);
                 //sobreescribir sobre el fichero utilizado(modo trunk)
         }
         if(descriptor_fichero_salida<0) { return ERROR; }

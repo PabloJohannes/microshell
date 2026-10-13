@@ -119,7 +119,7 @@ int leerLinea( char *linea, int maxLinea ) {
       return -1;
     }
     if(c=='\n'){
-      linea[i] = '\0';
+      linea[i] = '\n';
       return i;
     }
   }

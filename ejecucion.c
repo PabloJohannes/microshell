@@ -24,7 +24,7 @@ int ejecutar (int nordenes , int *nargs , char **ordenes , char ***args , int bg
                 cerrar_fd();
                 execvp(ordenes[i], args[i]);
                 printf("Error haciendo el execvp en la orden %d",i+1);
-                _exit(ERROR);
+                exit(ERROR);
             }else if(val==-1) {
                 printf("Error haciendo el fork para la orden %d",i+1);
                 exit(ERROR);
@@ -32,9 +32,82 @@ int ejecutar (int nordenes , int *nargs , char **ordenes , char ***args , int bg
             }
         }
     //Padre:
-    cerrar_fd();
+        cerrar_fd();
 
-    while(wait(NULL) != -1);
+        while(wait(NULL) != -1);
+    }
+
+
+    else {
+        pid_t valb1=fork();
+        if(valb1==0) {
+            pid_t valb2=fork();
+            if(valb2==0) {
+                for(int i=0;i<nordenes;i++) {
+                    pid_t val=fork();
+                    if(val==0) { //Hijo
+                        redirigir_entrada(i);
+                        redirigir_salida(i);
+                        cerrar_fd();
+                        execvp(ordenes[i], args[i]);
+                        printf("Error haciendo el execvp en la orden %d",i+1);
+                        exit(ERROR);
+                    }else if(val==-1) {
+                        printf("Error haciendo el fork para la orden %d",i+1);
+                        exit(ERROR);
+                        //mensaje error de fork
+                    }
+                }
+                //Padre:
+                cerrar_fd();
+
+                while(wait(NULL) != -1);
+            }
+            else {
+                exit(ERROR);
+            }
+        }
+        cerrar_fd();
+
+        while(wait(NULL) != -1);
     }
     return OK;
 } // Fin de la funcion "ejecutar"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
