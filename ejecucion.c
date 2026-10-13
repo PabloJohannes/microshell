@@ -50,6 +50,7 @@ int ejecutar (int nordenes , int *nargs , char **ordenes , char ***args , int bg
                         redirigir_salida(i);
                         cerrar_fd();
                         execvp(ordenes[i], args[i]);
+                        printf("Exit\n");
                         printf("Error haciendo el execvp en la orden %d",i+1);
                         exit(ERROR);
                     }else if(val==-1) {
@@ -62,6 +63,7 @@ int ejecutar (int nordenes , int *nargs , char **ordenes , char ***args , int bg
                 cerrar_fd();
 
                 while(wait(NULL) != -1);
+                printf("Done");
             }
             else {
                 exit(ERROR);
