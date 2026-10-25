@@ -2,7 +2,7 @@
  |     A N A L I Z A D O R . H                         |
  +-----------------------------------------------------+
  |     Asignatura :  SOP-GIIROB                        |
- |     Descripcion:                                    |
+ |     Descripcion:  Pablo no lo ha modificado         |
  +-----------------------------------------------------*/
 
 #ifndef ANALIZADOR_H

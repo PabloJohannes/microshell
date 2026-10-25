@@ -2,7 +2,7 @@
  |     R E D I R E C C I O N . H                       |
  +-----------------------------------------------------+
  |     Asignatura :  SOP-GIIROB                        |
- |     Descripcion:                                    |
+ |     Descripcion:  Pablo no lo ha modificado         |
  +-----------------------------------------------------*/
 
 #ifndef REDIRECCION_H

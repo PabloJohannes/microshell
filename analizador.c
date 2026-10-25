@@ -1,10 +1,10 @@
 /*-----------------------------------------------------+
  |     A N A L I Z A D O R . C                         |
  +-----------------------------------------------------+
- |     Version    :                                    |
- |     Autor      :                                    |
+ |     Version    :  versión final                     |
+ |     Autor      :  Silvia María Terrasa Barrena      |
  |     Asignatura :  SOP-GIIROB                        |
- |     Descripcion:                                    |
+ |     Descripcion:  Pablo no lo ha modificado         |
  +-----------------------------------------------------*/
 
 

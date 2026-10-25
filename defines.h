@@ -2,7 +2,7 @@
  |    D E F I N E S . H                                |
  +-----------------------------------------------------+
  |     Asignatura :  SOP-GIIROB                        |
- |     Descripcion:                                    |
+ |     Descripcion:  Modificado parcialemnte por Pablo |
  +-----------------------------------------------------*/
 
 #ifndef DEFINES_H

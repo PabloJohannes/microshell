@@ -1,16 +1,16 @@
-/*-----------------------------------------------------+      
- |     R E D I R E C C I O N . C                       |
- +-----------------------------------------------------+
- |     Version    :                        
- |     Autor :   
- |     Asignatura :  SOP-GIIROB                                                       
- |     Descripcion: 
- +-----------------------------------------------------*/
+/*---------------------------------------------------------------+
+ |     R E D I R E C C I O N . C                                 |
+ +---------------------------------------------------------------+
+ |     Versión : versión final                                   |
+ |     Autor :  Pablo Johannes Bäumgen Nagore                    |
+ |     Asignatura :  SOP-GIIROB                                  |
+ |     Descripción :  Ésta es la versión que pretendo entregar   |
+ +---------------------------------------------------------------*/
 #include "defines.h"
 #include "analizador.h"
 #include "redireccion.h"
 
-#include <unistd.h>     //preguntar a Silvia si quiere que lo pongamos aquí también (lo pongo ahora porque así se me quitan los mensajes de warning)
+#include <unistd.h>
 
 REDIRECCION_ORDENES red_ordenes;
 
@@ -18,7 +18,7 @@ REDIRECCION_ORDENES red_ordenes;
 
 void redireccion_ini(void)
 {
-    for(int i=0; i<9; i++){
+    for(int i=0; i<9; i++){ //aquí estoy asumiendo que no van a haber mas de 9 órdenes. Podría también poner mas, creo yo)
     red_ordenes[i].entrada = 0;
     red_ordenes[i].salida = 1;
     }
@@ -32,11 +32,14 @@ int descriptor_fichero_entrada_bgnd;
 int pipeline(int nordenes, char * infile, char * outfile, int append, int bgnd)
 {
     redireccion_ini();
-
+    num_descriptores = 0;
 
     if(infile[0] != '\0'){
         descriptor_fichero_entrada = open(infile,O_RDONLY);
-        if(descriptor_fichero_entrada<0) { return ERROR; }
+        if(descriptor_fichero_entrada<0) { 
+            cerrar_fd();
+            return ERROR; 
+        }
         red_ordenes[0].entrada = descriptor_fichero_entrada;
         num_descriptores++;
         //abrir archivo y asignar descriptor para ponerlo luego como entrada de la primera orden
@@ -49,15 +52,24 @@ int pipeline(int nordenes, char * infile, char * outfile, int append, int bgnd)
             descriptor_fichero_salida = open(outfile,O_WRONLY|O_TRUNC|O_CREAT,0644);
                 //sobreescribir sobre el fichero utilizado(modo trunk)
         }
-        if(descriptor_fichero_salida<0) { return ERROR; }
+        if(descriptor_fichero_salida<0) {
+            cerrar_fd();
+            return ERROR; 
+        }
         red_ordenes[nordenes-1].salida = descriptor_fichero_salida;
         num_descriptores++;
         //para poner en la salida de la �ltima orden
     }
     for(int i=0; i<(nordenes-1); i++){
         int fd[2];
-        if(pipe(fd) == -1) { return ERROR; }
-        if(fd[0]<0 || fd[1]<0) { return ERROR; }
+        if(pipe(fd) == -1) { 
+            cerrar_fd();           
+            return ERROR; 
+        }
+        if(fd[0]<0 || fd[1]<0) { 
+            cerrar_fd();           
+            return ERROR; 
+        }//(possiblemente redundante)
         num_descriptores+=2;
         red_ordenes[i].salida = fd[1];
         red_ordenes[i+1].entrada = fd[0];
@@ -67,14 +79,27 @@ int pipeline(int nordenes, char * infile, char * outfile, int append, int bgnd)
     if(bgnd){
 
         descriptor_fichero_entrada_bgnd = open("/dev/null",O_RDONLY);
+        if(descriptor_fichero_entrada_bgnd<0) { 
+            cerrar_fd();            
+            return ERROR; 
+        }
         red_ordenes[0].entrada = descriptor_fichero_entrada_bgnd;
-        if(descriptor_fichero_entrada_bgnd<0) { return ERROR; }
         num_descriptores++;        
         //abrir fichero "/dev/null"
         //asignar descriptor a red_ordenes[i].entrada
+        //soy consciente que ésto significa que si en background tengo un fichero de entrada, éste no se va a tener en cuenta. 
+        //podría poner un if, para evitarlo, pero con lo que pone en el enunciado de la práctica, voy a asumir que lo que se 
+        //pide es lo que tengo aquí.
     }
 
     return OK;
+
+    //(soy consciente de que en las comprobaciones de los valores retornados de los open,
+    // podría hasta poner error si es menor que 3,
+    // ya que se supone que STD0, STD1 y STDERR deberían occupar las 3 primeras posiciones)
+    
+    // (me he dado cuenta que es ventajoso cerrar todos los descriptores antes de retornar ERROR,
+    // ya que el único sitio en el que se hace cerrar_fd() es en ejecutar, lo cuál no se ejecuta si pipeline devuelve 0)
 } // Fin de la funci�n "pipeline"
 
 
@@ -100,10 +125,16 @@ int redirigir_salida(int i)
 
 int cerrar_fd()
 {
-    //cerrar todo lo que no sea 0, 1 o 2
+    int resultado = OK;
+    //cerrar todo lo que no sea 0, 1 o 2:
+
     for(int i = 0; i<num_descriptores;i++){
-        close(i+3);
+        if(close(i+3) == -1) {
+            printf("ERROR cerrando el descriptor %d\n",i+3);
+            resultado = ERROR;
+        }
     }
+    return resultado;
 } // Fin de la funci�n "cerrar_fd"
 
 

@@ -1,10 +1,10 @@
 /*-----------------------------------------------------+      
  |     E J E C U C I O N . H                           |
  +-----------------------------------------------------+
- |     Version    :                                    |
- |     Autor      :                                    |
+ |     Version    :  versión final                     |
+ |     Autor      :  Silvia María Terrasa Barrena      |
  |     Asignatura :  SOP-GIIROB                        |
- |     Descripcion:                                    |
+ |     Descripcion:  Pablo no lo ha modificado         |
  +-----------------------------------------------------*/
 
 #ifndef EJECUCION_H

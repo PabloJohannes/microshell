@@ -1,11 +1,11 @@
-/*-----------------------------------------------------+
+/*---------------------------------------------------------------+
  |     U S H. C                                        
- +-----------------------------------------------------+
- |     Versión :                                       |                      
- |     Autor :                                         |
- |     Asignatura :  SOP-GIIROB                        |                               
- |     Descripción :                                   |
- +-----------------------------------------------------*/
+ +---------------------------------------------------------------+
+ |     Versión : versión final                                   |
+ |     Autor :  Pablo Johannes Bäumgen Nagore                    |
+ |     Asignatura :  SOP-GIIROB                                  |
+ |     Descripción :  Ésta es la versión que pretendo entregar   |
+ +---------------------------------------------------------------*/
 #include "defines.h"
 #include "analizador.h"
 #include "redireccion.h"
@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
     
     do
     {
-        res=leerLinea(line,MAXLINE);    
+        res=leerLinea(line,MAXLINE);
         if (res==-2) {
       		fprintf(stdout,"logout\n");
 		      exit(0);
@@ -113,17 +113,18 @@ int leerLinea( char *linea, int maxLinea ) {
     if(c == EOF){
       return -2;
     }
-    linea[i] = c;
-    i++;
     if(i>=maxLinea){
       return -1;
     }
+    linea[i] = c;
+    i++;
+
     if(c=='\n'){
-      linea[i] = '\n';
       return i;
     }
   }
 }
+
 
 
 
